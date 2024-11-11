@@ -4,23 +4,38 @@ import RPi.GPIO as GPIO
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
-pinldr = 4
+pin_ldr = 4
 
 
-def detect_light():
-    ldrcount = 0
-    GPIO.setup(pinldr, GPIO.OUT)
-    GPIO.output(pinldr, GPIO.LOW)
+
+def main():
+
+    while True:
+        cup_detected = detect_light(pin_ldr)
+        print(cup_detected)
+
+def detect_light(pin):
+    ldr_count = 0
+    GPIO.setup(pin, GPIO.OUT)
+    GPIO.output(pin, GPIO.LOW)
     time.sleep(0.1)
 
-    GPIO.setup(pinldr, GPIO.IN)
+    GPIO.setup(pin, GPIO.IN)
 
     # While the input pin reads 'off' or 'low' count is increased
     # If the pin reads 'off' or 'low' light source has decreased, a coffee cup is placed on the ldr
-    while(GPIO.input(pinldr) == GPIO.LOW):
-        ldrcount += 1
-    return ldrcount
+    while(GPIO.input(pin) == GPIO.LOW):
+        ldr_count += 1
 
-while True:
-    print(detect_light())
-    time.sleep(1) # allow capacitor to decharge
+
+    if ldr_count > 1500:
+        return (True, ldr_count) # cup detected (low light)
+    else:
+        return (False, ldr_count) # no cup detected (bright light)
+    
+
+
+
+if __name__ == "__main__":
+    main()
+
