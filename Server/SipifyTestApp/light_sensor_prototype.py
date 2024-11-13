@@ -10,6 +10,7 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 load_dotenv()
 pin_ldr = 4
+data = {}
 
 
 class Listener(SubscribeListener):
@@ -28,19 +29,11 @@ pubnub.add_listener(Listener())
 app_channel = "Sipify-channel"
 
 subscription = pubnub.channel(app_channel).subscription()
-subscription.on_message = lambda message: handle_message(message)
 subscription.subscribe()
 
 publish_result = (
     pubnub.publish().channel(app_channel).message("Hello from Sipify").sync()
 )
-
-
-# def handle_message(message):
-#     print(message.message)
-#     msg = json.loads(json.dumps(message.message))
-#     if "message" in msg:
-#         buzzer = msg["message"]["buzzer"]
 
 
 def main():
