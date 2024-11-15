@@ -30,16 +30,6 @@ function keepAlive() {
     setTimeout('keepAlive()', heartBeatRate);
 }
 
-function handleClick(cb) {
-    if (cb.checked) {
-        value = "on";
-    }
-    else {
-        value = "off";
-    }
-    console.log("Calling publishMessage from handleClick")
-    publishMessage({ "buzzer": value })
-}
 
 const setupPubNub = () => {
     pubnub = new PubNub({
@@ -75,10 +65,10 @@ const publishMessage = async (message) => {
 };
 
 function handleMessage(message) {
-    if (message == "Coffee Detected") {
+    if (message == "Cup detected") {
         document.getElementById("motion_id").innerHTML = "There is coffee there";
     }
-    if (message == "No Coffee") {
+    if (message == "No cup detected") {
         document.getElementById("motion_id").innerHTML = "No coffee present";
     }
 }
