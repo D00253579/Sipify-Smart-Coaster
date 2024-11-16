@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barista Mode</title>
+</head>
+<body> 
+    <a href = '/temperatures'>
+        <button type="button" id="view_temperatures_button">View Temperatures</button>
+    </a>   
+    <!-- cup image -->
+    <h1>Input current temperature:</h1>
+    <input type="text" id="current_temperature">
+    
+    <h1>notification</h1>
+     <ul>
+        {% for notification in all_notifications["notifications"] %}
+        <li>
+            <span>{{ notification.status }}</span>
+            <br>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <ul>
+        {% for drink in all_drinks["drinks"] %}
+        <li>
+            <span>{{ drink.drink_name }}</span>
+            <br>
+            Temperature Type: {{ drink.temperature_type }}
+            Min Temperature: {{ drink.minimum_temperature }}
+            Max Temperature: {{ drink.maximum_temperature }}
+        </li>
+        {% endfor %}
+    </ul>
+    <a href ="index.html">
+        <button type="button" id="finish_button">Finish</button>
+    </a>
+</body>
+</html>

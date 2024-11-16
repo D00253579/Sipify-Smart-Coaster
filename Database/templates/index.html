@@ -6,17 +6,10 @@
     <title>Sipify The Smart Coaster</title>
 </head>
 <body>
-    <p>Drinks</p>
-    <ul>
-    {% for drink in all_drinks["drinks"] %}
-    <li>
-        <span>{{ drink }}</span>
-        {{ drink.drink_name }}
-        {{ drink.temperature_type }}
-        {{ drink.minimum_temperature }}
-        {{ drink.maximum_temperature }}
-    </li>
-    {% endfor %}
-    </ul>
+    <!-- logo -->
+     <img src="/static/sipifyLogo.png" alt="Sipify Logo Image">
+    <a href = '/drinks_selection'>
+        <button type="button" id="loading_button">Continue</button>
+    </a>
 </body>
 </html>

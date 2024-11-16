@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperatures</title>
+</head>
+<body>
+    <h1> Temperatures </h1>
+    <ul>
+        {% for drink in all_drinks["drinks"] %}
+        <li>
+            <span>{{ drink.drink_name }}</span>
+            <br>
+            Min: {{ drink.minimum_temperature }}
+            Max: {{ drink.maximum_temperature }}
+        </li>
+        {% endfor %}
+        </ul>
+        <a href = '/barista_mode'>
+            <button type="button" id="back_button">Back</button>
+        </a>
+</body>
+</html>
