@@ -15,14 +15,36 @@ import mongoDB
 
 @app.route("/")
 def index():
-    mongoDB.getAllDrinks()
-    print("1", mongoDB.viewAllDrinks())
-    return render_template("index.html", all_drinks=mongoDB.getAllDrinks())
+    return render_template("index.html")
+
+
+# show list of drinks, allow user to select a drink and click the next button to continue
+@app.route("/drinks_selection")
+def show_drinks_selection():
+    all_drinks = mongoDB.view_all_drinks()
+    return render_template("drinks_selection.html", all_drinks=all_drinks)
+
+
+# show list of drinks , and temperature range for each drink (min and max temperatures)
+@app.route("/temperatures")
+def show_temperatures():
+    all_temperatures = mongoDB.view_all_drinks()
+    all_drinks = mongoDB.view_all_drinks()
+    return render_template(
+        "temperatures.html", all_temperatures=all_temperatures, all_drinks=all_drinks
+    )
+
+
+# show current drink name, temp and notification
+@app.route("/barista_mode")
+def barista_mode():
+    all_drinks = mongoDB.view_all_drinks()
+    all_notifications = mongoDB.view_all_notifications()
+    print(all_notifications)
+    return render_template(
+        "barista_mode.html", all_drinks=all_drinks, all_notifications=all_notifications
+    )
 
 
 if __name__ == "__main__":
-    # latte = Drink(name="Latte")
-    # latte.save()
-    # print("Document created successfully")
-    # app.run(debug=True, host="0.0.0")
     app.run(debug=True)

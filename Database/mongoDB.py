@@ -2,7 +2,6 @@ from flask_mongoengine import MongoEngine
 
 from app import db
 
-
 # client = pymongo.MongoClient(CONNECTION_STRING)
 
 
@@ -22,12 +21,30 @@ class Drinks(db.Document):
 # new_drink = Drink(coffee_name="Latte")
 
 
-def viewAllDrinks():
-    print("view all drinks called")
+class Notifications(db.Document):
+    status = db.StringField()
+
+
+# Create a drink history class from db
+# Include the current temperature - to take this in
+# The drink name that was selected from the drinks selection page
+# The notification associated with it
+
+
+# Use a dictionary to store the list of drinks
+# access each variable using the name in quotation marks
+def view_all_drinks():
+    drink_records = {"drinks": []}
     for drink in Drinks.objects:
-        # print(
-        #     f"{drink.drink_name} + {drink.temperature_type} + {drink.minimum_temperature} + {drink.maximum_temperature}"
-        # )
+        drink_records["drinks"].append(
+            {
+                "drink_name": drink.drink_name,
+                "temperature_type": drink.temperature_type,
+                "minimum_temperature": drink.minimum_temperature,
+                "maximum_temperature": drink.maximum_temperature,
+            }
+        )
+        # print the drink values to view in terminal
         print(
             str(drink.drink_name)
             + " | "
@@ -37,17 +54,14 @@ def viewAllDrinks():
             + " | "
             "" + str(drink.maximum_temperature)
         )
-
-
-def getAllDrinks():
-    drink_records = {"drinks": []}
-    for drink in Drinks.objects:
-        drink_records["drinks"].append(
-            [
-                drink.drink_name,
-                drink.temperature_type,
-                drink.minimum_temperature,
-                drink.maximum_temperature,
-            ]
-        )
     return drink_records
+
+
+def view_all_notifications():
+    notification_records = {"notifications": []}
+    for notification in Notifications.objects:
+        notification_records["notifications"].append({"message": notification.message})
+    return notification_records
+
+
+# notifications based on temperature ranges
