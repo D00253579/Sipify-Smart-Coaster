@@ -10,9 +10,8 @@
     <!-- add radio buttons - click the drink and have this saved -->
     <ul>
         {% for drink in all_drinks["drinks"] %}
-        <li>
+            <input type="checkbox" id="selected" value="{{ drink.drink_name }}">
             <span>{{ drink.drink_name }}</span>
-        </li>
         {% endfor %}
         </ul>
         <a href = '/barista_mode'>

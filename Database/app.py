@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import json
 
 from flask_mongoengine import MongoEngine
@@ -38,12 +38,36 @@ def show_temperatures():
 # show current drink name, temp and notification
 @app.route("/barista_mode")
 def barista_mode():
-    all_drinks = mongoDB.view_all_drinks()
     all_notifications = mongoDB.view_all_notifications()
+    all_drink_status = mongoDB.get_drink_status()
     print(all_notifications)
     return render_template(
-        "barista_mode.html", all_drinks=all_drinks, all_notifications=all_notifications
+        "barista_mode.html",
+        all_notifications=all_notifications,
+        all_drink_status=all_drink_status,
     )
+
+
+# need to do something with the selected drink
+# first checking if the selected drink exists
+@app.route("/get_selected_drink", methods=["POST"])
+def get_selected_drink():
+    print(selected_drink)
+    selected_drink = request.form.get("selected")
+
+    if selected_drink:
+        mongoDB.add_drink_status(selected_drink)
+    else:
+        return "Please select a drink"
+
+    # get_selected_drink = Drink_Status.query.filter_by(
+    #     selected_drink=selected_drink
+    # ).first()
+    # if get_selected_drink is not None:
+    #     return get_selected_drink
+    # else:
+    #     print("That drink does not exist")
+    #     return False
 
 
 if __name__ == "__main__":
