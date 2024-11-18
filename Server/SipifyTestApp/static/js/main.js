@@ -71,4 +71,16 @@ function handleMessage(message) {
     if (message == "No cup detected") {
         document.getElementById("motion_id").innerHTML = "No coffee present";
     }
+    if (message == "Red LED Activated") {
+        document.getElementById("led_id").innerHTML = "Red LED Activated";
+    }
+    if (message == "Blue LED Activated") {
+        document.getElementById("led_id").innerHTML = "Blue LED Activated";
+    }
+    if (message == "Green LED Activated") {
+        document.getElementById("led_id").innerHTML = "Green LED Activated";
+    }
+    if (message == "LED deactivated") {
+        document.getElementById("led_id").innerHTML = "Deactivated";
+    }
 }
