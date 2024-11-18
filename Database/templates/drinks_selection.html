@@ -1,21 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drink Selection</title>
-</head>
-<body>
-    <h1>Select Your Drink</h1>
-    <!-- add radio buttons - click the drink and have this saved -->
-    <ul>
-        {% for drink in all_drinks["drinks"] %}
-            <input type="checkbox" id="selected" value="{{ drink.drink_name }}">
-            <span>{{ drink.drink_name }}</span>
-        {% endfor %}
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Drink Selection</title>
+    </head>
+
+    <body>
+        <h1>Select Your Drink</h1>
+        <!-- add radio buttons - click the drink and have this saved -->
+        <ul>
+            <form action="/get_selected_drink" method="POST">
+                {% for drink in all_drinks["drinks"] %}
+                <input type="checkbox" id="drink_checkbox" name="selected" value="{{ drink.drink_name }}">
+                <span>{{ drink.drink_name }}</span>
+                {% endfor %}
+
+                <button type="submit" id="loading_button">->Next</button>
+
+            </form>
         </ul>
-        <a href = '/barista_mode'>
-            <button type="button" id="loading_button">->Next</button>
-        </a>
-</body>
+
+
+    </body>
+
 </html>

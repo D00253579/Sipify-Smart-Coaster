@@ -2,8 +2,8 @@ from flask_mongoengine import MongoEngine
 
 from app import db
 
-# client = pymongo.MongoClient(CONNECTION_STRING)
 
+# client = pymongo.MongoClient(CONNECTION_STRING)
 
 # db = client.get_database("Sipify")
 
@@ -12,6 +12,7 @@ from app import db
 
 # drink class is for the drinks table
 class Drinks(db.Document):
+    meta = {"collection": "drinks"}
     drink_name = db.StringField()
     temperature_type = db.StringField()  # hot or cold drink
     minimum_temperature = db.IntField()
@@ -20,6 +21,7 @@ class Drinks(db.Document):
 
 # new_drink = Drink(coffee_name="Latte")
 class Notifications(db.Document):
+    meta = {"collection": "notifications"}
     status = db.StringField()
     message = db.StringField()
 
@@ -29,6 +31,7 @@ class Notifications(db.Document):
 # The drink name that was selected from the drinks selection page
 # The notification associated with it
 class Drink_Status(db.Document):
+    meta = {"collection": "drink_status"}
     selected_drink = db.StringField()
     current_temperature = db.IntField()
     current_notification = db.StringField()
@@ -87,6 +90,7 @@ def get_drink_status():
                 "current_notification": status.current_notification,
             }
         )
+    return drink_status_records
 
 
 # def selected_drink():
@@ -95,6 +99,10 @@ def get_drink_status():
 
 def add_drink_status(selected_drink):
     if selected_drink is not False:
-        new_drink_status = Drink_Status(selected_drink)
+        Drink_Status(
+            selected_drink=selected_drink,
+            current_temperature=0,
+            current_notification="",
+        ).save()
     else:
         print("No drink selected")
