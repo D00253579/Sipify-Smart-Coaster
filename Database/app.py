@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, redirect, request
 import json
 
 from flask_mongoengine import MongoEngine
@@ -48,26 +48,11 @@ def barista_mode():
     )
 
 
-# need to do something with the selected drink
-# first checking if the selected drink exists
 @app.route("/get_selected_drink", methods=["POST"])
 def get_selected_drink():
-    print(selected_drink)
     selected_drink = request.form.get("selected")
-
-    if selected_drink:
-        mongoDB.add_drink_status(selected_drink)
-    else:
-        return "Please select a drink"
-
-    # get_selected_drink = Drink_Status.query.filter_by(
-    #     selected_drink=selected_drink
-    # ).first()
-    # if get_selected_drink is not None:
-    #     return get_selected_drink
-    # else:
-    #     print("That drink does not exist")
-    #     return False
+    mongoDB.add_drink_status(selected_drink)
+    return redirect("/barista_mode")
 
 
 if __name__ == "__main__":
