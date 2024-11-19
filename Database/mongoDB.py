@@ -73,13 +73,30 @@ def view_all_notifications():
 
 
 # notifications based on temperature ranges
-def get_notification(current_temp, drink_name):
+def get_notification(selected_drink, current_temperature):
     for drink in Drinks.objects:
-        for notification in Notifications.objects:
-            if current_temp <= drink.minimum_temperature:  # drink is getting cold
-                return notification.status == "cold" and notification.message
+        if (
+            drink.drink_name == selected_drink
+        ):  # find the matching drink name from the table
+            if current_temperature < drink.minimum_temperature:  # drink is cold
+                notification = Notifications.objects.get(status="cold")
+            elif current_temperature > drink.maximum_temperature:  # drink is hot
+                notification = Notifications.objects.get(status="hot")
+            else:
+                notification = Notifications.objects.get(
+                    status="ready"
+                )  # drink is ready
+
+            if notification:
+                return (
+                    notification.message
+                )  # output the message associated with the status
+            else:
+                return "Notification not available"
 
 
+# make sure to have the barista mode to display the most recent drink that has been added into the drink status table
+# or use the sessions
 def get_drink_status():
     drink_status_records = {"status": []}
     for status in Drink_Status.objects:
@@ -93,16 +110,23 @@ def get_drink_status():
     return drink_status_records
 
 
-# def selected_drink():
-#     row =
-
-
-def add_drink_status(selected_drink):
+def add_drink_status(selected_drink, current_temperature):
     if selected_drink is not False:
+        # take in the notification from the get notification method
+        current_notification = get_notification(selected_drink, current_temperature)
+
         Drink_Status(
             selected_drink=selected_drink,
-            current_temperature=0,
-            current_notification="",
+            current_temperature=current_temperature,
+            current_notification=current_notification,
         ).save()
+
+        print(
+            str(selected_drink)
+            + " | "
+            + str(current_temperature)
+            + " | "
+            + str(current_notification)
+        )
     else:
         print("No drink selected")
