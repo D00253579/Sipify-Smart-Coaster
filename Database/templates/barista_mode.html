@@ -1,46 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Barista Mode</title>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barista Mode</title>
+</head>
 
-    <body>
-        <a href='/temperatures'>
-            <button type="button" id="view_temperatures_button">View Temperatures</button>
-        </a>
-        <!-- cup image -->
-        <h1>Input current temperature:</h1>
-        <input type="text" id="current_temperature">
-        <button type="button" id="add_current_temperature">Add Temperature</button>
+<body>
+    <a href='/temperatures'>
+        <button type="button" id="view_temperatures_button">View Temperatures</button>
+    </a>
+    
+    <!-- cup image -->
 
-        <h1>notification</h1>
-        <ul>
-            {% for notification in all_notifications["notifications"] %}
-            <li>
-                <span>{{ notification.status }}</span>
-                <span>{{ notification.message }}</span>
-                <br>
-            </li>
-            {% endfor %}
-        </ul>
-        <h1>Drink Selection</h1>
-        <ul>
-            {% for status in all_drink_status["status"] %}
-            <li>
-                <span>{{ status.selected_drink }}</span>
-                <br>
-                <!-- Current Temperature: {{ status.current_temperature }}
-            Current Notification: {{ status.current_notification }} -->
-            </li>
-            {% endfor %}
-        </ul>
+    
+    <h1>Barista Mode</h1>
+    <ul>
+        {% for status in all_drink_status["status"] %}
+        <li>
+            <span>{{ status.selected_drink }}</span>
+            <br>
+            Current Temperature: {{ status.current_temperature }} °C
+            Current Notification: {{ status.current_notification }} 
+        </li>
+        {% endfor %}
+    </ul>
 
-        <a href="index.html">
-            <button type="button" id="finish_button">Finish</button>
-        </a>
-    </body>
+    <a href="index.html">
+        <button type="button" id="finish_button">Finish</button>
+    </a>
+</body>
 
 </html>

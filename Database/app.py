@@ -38,21 +38,27 @@ def show_temperatures():
 # show current drink name, temp and notification
 @app.route("/barista_mode")
 def barista_mode():
-    all_notifications = mongoDB.view_all_notifications()
+    # drink_notification = mongoDB.get_notification()
     all_drink_status = mongoDB.get_drink_status()
-    print(all_notifications)
     return render_template(
         "barista_mode.html",
-        all_notifications=all_notifications,
+        # drink_notification=drink_notification,
         all_drink_status=all_drink_status,
     )
 
 
-@app.route("/get_selected_drink", methods=["POST"])
+@app.route("/get_drink_and_temperature", methods=["POST"])
 def get_selected_drink():
     selected_drink = request.form.get("selected")
-    mongoDB.add_drink_status(selected_drink)
-    return redirect("/barista_mode")
+    current_temperature = request.form.get("input_temperature")
+
+    current_temperature = int(current_temperature)
+
+    if selected_drink and current_temperature:
+        mongoDB.add_drink_status(selected_drink, current_temperature)
+        return redirect("/barista_mode")
+    else:
+        return "Please input the temperature and select a drink!"
 
 
 if __name__ == "__main__":
