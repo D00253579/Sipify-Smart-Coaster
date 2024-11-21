@@ -1,16 +1,21 @@
 from flask import Flask, render_template, redirect, request
 import json
 
+# import pymongo
+import mongoDB
 from flask_mongoengine import MongoEngine
 
 app = Flask(__name__)
 
+# app.config["MONGODB_URI"] = (
+# )
+
 app.config["MONGODB_SETTINGS"] = {"db": "sipify", "host": "localhost", "port": 27017}
+
+# mongoDB.db.init_app(app)
 
 db = MongoEngine()
 db.init_app(app)
-
-import mongoDB
 
 
 @app.route("/")
@@ -22,6 +27,7 @@ def index():
 @app.route("/drinks_selection")
 def show_drinks_selection():
     all_drinks = mongoDB.view_all_drinks()
+    print(all_drinks)
     return render_template("drinks_selection.html", all_drinks=all_drinks)
 
 
