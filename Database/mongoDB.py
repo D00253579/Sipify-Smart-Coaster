@@ -1,13 +1,12 @@
 from flask_mongoengine import MongoEngine
+from flask_pymongo import pymongo
+from mongoengine import connect
+
 
 from app import db
 
-
-# client = pymongo.MongoClient(CONNECTION_STRING)
-
-# db = client.get_database("Sipify")
-
-# db = MongoEngine(app)
+# for atlas
+# db = MongoEngine()
 
 
 # drink class is for the drinks table
@@ -60,6 +59,8 @@ def view_all_drinks():
             + " | "
             "" + str(drink.maximum_temperature)
         )
+    print(drink_records)
+
     return drink_records
 
 
