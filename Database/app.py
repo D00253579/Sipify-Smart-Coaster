@@ -1,18 +1,15 @@
 from flask import Flask, render_template, redirect, request
-import json
-
-# import pymongo
-import mongoDB
 from flask_mongoengine import MongoEngine
+import mongoDB
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 app = Flask(__name__)
 
-# app.config["MONGODB_URI"] = (
-# )
-
-app.config["MONGODB_SETTINGS"] = {"db": "sipify", "host": "localhost", "port": 27017}
-
-# mongoDB.db.init_app(app)
+database_URI = os.getenv("DATABASE_URI")
+app.config["MONGODB_SETTINGS"] = {"host": database_URI}
 
 db = MongoEngine()
 db.init_app(app)

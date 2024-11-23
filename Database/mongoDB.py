@@ -1,12 +1,7 @@
 from flask_mongoengine import MongoEngine
-from flask_pymongo import pymongo
-from mongoengine import connect
-
+from mongoengine import Document, StringField, IntField
 
 from app import db
-
-# for atlas
-# db = MongoEngine()
 
 
 # drink class is for the drinks table
