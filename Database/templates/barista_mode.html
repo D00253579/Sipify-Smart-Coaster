@@ -12,6 +12,7 @@
         <script src="static/js/main.js"></script>
     </head>
 
+<<<<<<< Updated upstream
     <body onload="hideData(); setupPubNub();">
         <div id="no_coffee_data">
             <img src="/static/sipifyLogo.png" alt="Sipify Logo Image" width="200" height="150">
@@ -20,6 +21,32 @@
                 <div class="text-center mt-4">
                     <h3>Please place your cup onto the coaster......</h3>
                 </div>
+=======
+<body>
+
+    <div class="mt-2 ml-2">
+        <a href = '/barista_controls'>
+        <button type="button" id="loading_button" class="btn btn-primary btn-lg rounded-top mt-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+              </svg>
+              Controls
+    </button>
+    </a>
+</div>
+    <div class="text-center">
+    <h1>Barista Mode</h1>
+
+    <div class="text-center">
+    <img src="/static/cup.png" alt="coffee image" height="250"> 
+</div>
+
+    <ul class="list-inline barista d-flex justify-content-center align-itemms-center flex-wwrap">
+        {% for status in all_drink_status["status"] %}
+        <li>
+            <div class="card text-center mt-3" style="width: 20rem">
+            <span><b>"{{ status.current_notification }} "</b></span>
+>>>>>>> Stashed changes
             </div>
             <img src="/static/oneSide.png" alt="coffee background image" class="barista-image" height="300">
         </div>
