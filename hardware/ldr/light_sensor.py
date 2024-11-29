@@ -34,6 +34,7 @@ publish_result = (
 
 def main():
     while True:
+        time.sleep(3)
         cup_detected = detect_light(pin_ldr)
         print(cup_detected)
 

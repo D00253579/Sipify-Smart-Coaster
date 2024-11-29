@@ -1,7 +1,10 @@
 let pubnub;
 let appChannel = "Sipify-channel";
 
-
+function hideData() {
+    document.getElementById("no_coffee_data").style.display = "block";
+    document.getElementById("show_coffee_data").style.display = "none";
+};
 
 const setupPubNub = () => {
     pubnub = new PubNub({
@@ -36,6 +39,15 @@ const publishMessage = async (message) => {
     await pubnub.publish(publishPayload);
 };
 
-function handleMessage(message) {
 
-}
+
+function handleMessage(message) {
+    if (message == "Cup detected") {
+        document.getElementById("show_coffee_data").style.display = "block";
+        document.getElementById("no_coffee_data").style.display = "none";
+    }
+    else if (message == "No cup detected") {
+        document.getElementById("no_coffee_data").style.display = "block";
+        document.getElementById("show_coffee_data").style.display = "none";
+    }
+};
