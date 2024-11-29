@@ -64,5 +64,20 @@ def get_selected_drink():
         return "Please input the temperature and select a drink!"
 
 
+@app.route("/barista_controls")
+def barista_controls():
+    return render_template("barista_controls.html")
+
+
+@app.route("/add_drink")
+def add_drink():
+    return render_template("add_drink.html")
+
+
+@app.route("/edit_drink")
+def edit_drink():
+    return render_template("edit_drink.html")
+
+
 if __name__ == "__main__":
     app.run(debug=True)

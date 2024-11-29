@@ -1,5 +1,6 @@
 from flask_mongoengine import MongoEngine
 from mongoengine import Document, StringField, IntField
+import base64
 
 from app import db
 

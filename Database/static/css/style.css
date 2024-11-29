@@ -77,3 +77,15 @@ span{
     font-family:Italiana;
     font-size: 25px;
 }
+
+.btn-circle.btn-xl {
+    width: 100px;
+    height: 70px;
+    padding: 10px 16px;
+    font-size: 20px;
+    line-height: 1.33;
+    border-radius: 40px;
+    background-color: white;
+    color: #B8613A;
+    border-color: black;
+  }
