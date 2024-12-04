@@ -8,20 +8,24 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
             integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.8.2.8.js"></script>
         <link rel="icon" href="/static/favicon.png" type="image/png">
         <script src="static/js/main.js"></script>
     </head>
+
     <body onload="hideData(); setupPubNub();">
         <div class="mt-2 ml-2">
-            <a href = '/barista_controls'>
-            <button type="button" id="loading_button" class="btn btn-primary btn-lg rounded-top mt-4">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
-                  </svg>
-                  Controls
-        </button>
-        </a>
-    </div>
+            <a href='/barista_controls'>
+                <button type="button" id="loading_button" class="btn btn-primary btn-lg rounded-top mt-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-list" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+                    </svg>
+                    Controls
+                </button>
+            </a>
+        </div>
         <div id="no_coffee_data">
             <img src="/static/sipifyLogo.png" alt="Sipify Logo Image" width="200" height="150">
             <div class="text-center mt-4">
@@ -29,8 +33,8 @@
                 <div class="text-center mt-4">
                     <h3>Please place your cup onto the coaster......</h3>
                 </div>
-                </div>
-                </div>
+            </div>
+        </div>
         <div id="show_coffee_data">
             <div class="text-center">
                 <h1>Barista Mode</h1>

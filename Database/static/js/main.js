@@ -2,8 +2,8 @@ let pubnub;
 let appChannel = "Sipify-channel";
 
 function hideData() {
-    document.getElementById("no_coffee_data").style.display = "none";
-    document.getElementById("show_coffee_data").style.display = "block";
+    document.getElementById("no_coffee_data").style.display = "block";
+    document.getElementById("show_coffee_data").style.display = "none";
 };
 
 const setupPubNub = () => {
@@ -25,12 +25,14 @@ const setupPubNub = () => {
     });
 
     subscription.onMessage = (messageEvent) => {
+        console.log("Message: " + messageEvent)
         handleMessage(messageEvent.message);
     };
 
     subscription.subscribe();
-};
+    console.log("Message: " + messageEvent)
 
+};
 const publishMessage = async (message) => {
     const publishPayload = {
         channel: appChannel,
@@ -42,6 +44,7 @@ const publishMessage = async (message) => {
 
 
 function handleMessage(message) {
+    console.log('Message: ' + message);
     if (message == "Cup detected") {
         document.getElementById("show_coffee_data").style.display = "block";
         document.getElementById("no_coffee_data").style.display = "none";
