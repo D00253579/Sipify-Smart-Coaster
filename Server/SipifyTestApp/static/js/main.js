@@ -50,10 +50,13 @@ const setupPubNub = () => {
     });
 
     subscription.onMessage = (messageEvent) => {
+        console.log("Message: " + messageEvent)
         handleMessage(messageEvent.message);
     };
 
     subscription.subscribe();
+    console.log("Message: " + messageEvent)
+
 };
 
 const publishMessage = async (message) => {
@@ -65,6 +68,7 @@ const publishMessage = async (message) => {
 };
 
 function handleMessage(message) {
+    console.log("Message: " + message)
     if (message == "Cup detected") {
         document.getElementById("motion_id").innerHTML = "There is coffee there";
     }
