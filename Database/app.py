@@ -79,5 +79,14 @@ def edit_drink():
     return render_template("edit_drink.html")
 
 
+@app.route("/history")
+def drink_history():
+    all_drink_status = mongoDB.get_drink_status()
+    return render_template(
+        "history.html",
+        all_drink_status=all_drink_status,
+    )
+
+
 if __name__ == "__main__":
     app.run(debug=True)

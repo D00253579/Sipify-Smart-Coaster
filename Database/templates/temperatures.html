@@ -12,25 +12,32 @@
 </head>
 
 <body>
-    <div class="container text-center">
     <img src="/static/sipifyLogo.png" alt="Sipify Logo Image" width="200" height="150">
-        <h1 class="mb-4"> Temperatures </h1>
-        <div class="row text-center">
-            <div class="col"></div>
-            <div class="col temp">Min:
-                <img src="/static/coldIcon.png" alt="coffee image" height="80">
-            </div>
-            <div class="col temp">Max:
-                <img src="/static/hotIcon.png" alt="coffee image" height="80">
-            </div>
-        </div>
+<div class="container text-center">    
+    <h1 class="mb-4"> Temperature Ranges </h1>
+    <table class="table table-hover">
+        <caption>List of Drink Temperatures</caption>
+        <thead class="table-light">
+            <tr>
+                <th scope="col" class="fs-6">Drink Name</th>
+                <th scope="col">Min               
+                     <img src="/static/coldIcon.png" alt="coffee image" height="50">
+                </th>
+                <th scope="col">Max
+                    <img src="/static/hotIcon.png" alt="coffee image" height="50">
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
             {% for drink in all_drinks["drinks"] %}
-            <div class="row text-center">
-            <div class="col">{{ drink.drink_name }}</div>
-            <div class="col">{{ drink.minimum_temperature }}°C</div>
-            <div class="col"> {{ drink.maximum_temperature }}°C</div>
-    </div>
+            <td>{{ drink.drink_name }}</td>
+            <td>{{ drink.minimum_temperature }}°C</td>
+            <td> {{ drink.maximum_temperature }}°C</td>
+        </tr>
+        </tbody>
     {% endfor %}
+</table>
 </div>
 
     <a href='/barista_controls'>
