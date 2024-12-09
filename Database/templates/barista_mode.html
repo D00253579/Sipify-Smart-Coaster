@@ -12,22 +12,9 @@
         <link rel="icon" href="/static/favicon.png" type="image/png">
         <script src="static/js/main.js"></script>
     </head>
-
+    {% include 'nav_bar.html' %}
     <body onload="hideData(); setupPubNub();">
-        <div class="mt-2 ml-2">
-            <a href='/barista_controls'>
-                <button type="button" id="loading_button" class="btn btn-primary btn-lg rounded-top mt-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-list" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                            d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
-                    </svg>
-                    Controls
-                </button>
-            </a>
-        </div>
         <div id="no_coffee_data">
-            <img src="/static/sipifyLogo.png" alt="Sipify Logo Image" width="200" height="150">
             <div class="text-center mt-4">
                 <h1>No coffee cup detected</h1>
                 <div class="text-center mt-4">
