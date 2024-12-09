@@ -66,4 +66,4 @@ while True:
         pubnub.publish().channel(app_channel).message(read_temp()).sync()
 
     print(read_temp())
-    time.sleep(1)
+    time.sleep(60)

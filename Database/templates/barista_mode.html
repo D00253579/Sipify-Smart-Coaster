@@ -13,7 +13,8 @@
         <script src="static/js/main.js"></script>
     </head>
     {% include 'nav_bar.html' %}
-    <body onload="hideData(); setupPubNub();">
+
+    <body onload="hideData();">
         <div id="no_coffee_data">
             <div class="text-center mt-4">
                 <h1>No coffee cup detected</h1>
@@ -31,7 +32,7 @@
                 </div>
 
                 <ul class="list-inline barista d-flex justify-content-center align-itemms-center flex-wwrap">
-                    {%  if current_drink_status["current_status"] %}
+                    {% if current_drink_status["current_status"] %}
                     {% for status in current_drink_status["current_status"] %}
                     <li>
                         <div class="card text-center mt-3" style="width: 20rem">
