@@ -10,10 +10,10 @@
     <link rel="icon" href="/static/favicon.png" type="image/png">
 </head>
 <body>
-            <img src="/static/sipifyLogo.png" alt="Sipify Logo Image" width="200" height="150">
+    {% include 'nav_bar.html' %}
     <form action="/get_drink_and_temperature" method="POST">
         <div class="text-center">
-            <h1>Select Your Drink:</h1>
+            <h1 class="mt-4">Select Your Drink</h1>
 
         <h2 class="mb-3">Enter Current Temperature</h2>
         <input type="number" id="current_temperature" name="input_temperature" class="w-2 mx-auto mb-4">°C
@@ -21,10 +21,7 @@
         <ul class="list-inline">
             {% for drink in all_drinks["drinks"] %}
             <li class="mb-2">
-            <input type="radio" id="drink_checkbox" name="selected" value="{{ drink.drink_name }}" class="form-check-input me-1">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cup" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M.11 3.187A.5.5 0 0 1 .5 3h13a.5.5 0 0 1 .488.608l-.22.991a3.001 3.001 0 0 1-1.3 5.854l-.132.59A2.5 2.5 0 0 1 9.896 13H4.104a2.5 2.5 0 0 1-2.44-1.958L.012 3.608a.5.5 0 0 1 .098-.42Zm12.574 6.288a2 2 0 0 0 .866-3.899zM1.124 4l1.516 6.825A1.5 1.5 0 0 0 4.104 12h5.792a1.5 1.5 0 0 0 1.464-1.175L12.877 4H1.123Z"/>
-            </svg>
+            <input type="radio" id="drink_checkbox" name="selected" value="{{ drink.drink_name }}" class="form-check-input me-1" style="color:#49695B">
             <span>{{ drink.drink_name }}</span><br>
             </li>
             {% endfor %}
