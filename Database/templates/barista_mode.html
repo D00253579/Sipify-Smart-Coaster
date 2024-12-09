@@ -31,7 +31,8 @@
                 </div>
 
                 <ul class="list-inline barista d-flex justify-content-center align-itemms-center flex-wwrap">
-                    {% for status in all_drink_status["status"] %}
+                    {%  if current_drink_status["current_status"] %}
+                    {% for status in current_drink_status["current_status"] %}
                     <li>
                         <div class="card text-center mt-3" style="width: 20rem">
                             <span><b>"{{ status.current_notification }} "</b></span>
@@ -46,6 +47,9 @@
                         </div>
                     </li>
                     {% endfor %}
+                    {% else %}
+                    <li>No drink status</li>
+                    {% endif %}
                 </ul>
                 <a href="/">
                     <button type="button" id="loading_button" class="btn btn-primary btn-lg rounded-top mt-4">Finish

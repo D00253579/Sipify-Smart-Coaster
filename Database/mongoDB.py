@@ -1,6 +1,7 @@
 from flask_mongoengine import MongoEngine
 from mongoengine import Document, StringField, IntField
 import base64
+import datetime
 
 from app import db
 
@@ -30,6 +31,7 @@ class Drink_Status(db.Document):
     selected_drink = db.StringField()
     current_temperature = db.IntField()
     current_notification = db.StringField()
+    created_at = db.DateTimeField(default=datetime.datetime.now)
 
 
 # Use a dictionary to store the list of drinks
@@ -105,6 +107,25 @@ def get_drink_status():
             }
         )
     return drink_status_records
+
+
+# get the most recent drink status to display on the barista mode page
+def get_current_drink_status():
+    current_drink_status = Drink_Status.objects.order_by(
+        "-created_at"
+    ).first()  # descending order
+
+    # if current_drink_status:
+    return {
+        "current_status": [
+            {
+                "selected_drink": current_drink_status.selected_drink,
+                "current_temperature": current_drink_status.current_temperature,
+                "current_notification": current_drink_status.current_notification,
+            }
+        ]
+    }
+    # return {"current_status": []}
 
 
 def add_drink_status(selected_drink, current_temperature):

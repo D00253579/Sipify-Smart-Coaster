@@ -42,11 +42,13 @@ def show_temperatures():
 @app.route("/barista_mode")
 def barista_mode():
     # drink_notification = mongoDB.get_notification()
-    all_drink_status = mongoDB.get_drink_status()
+    current_drink_status = mongoDB.get_current_drink_status()
+    print("current status", current_drink_status)
     return render_template(
         "barista_mode.html",
         # drink_notification=drink_notification,
-        all_drink_status=all_drink_status,
+        # all_drink_status=all_drink_status,
+        current_drink_status=current_drink_status,
     )
 
 

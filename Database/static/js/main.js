@@ -2,8 +2,8 @@ let pubnub;
 let appChannel = "Sipify-channel";
 
 function hideData() {
-    document.getElementById("no_coffee_data").style.display = "block";
-    document.getElementById("show_coffee_data").style.display = "none";
+    document.getElementById("no_coffee_data").style.display = "none";
+    document.getElementById("show_coffee_data").style.display = "block";
 };
 
 const setupPubNub = () => {
