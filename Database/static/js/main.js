@@ -1,6 +1,9 @@
 let pubnub;
 let appChannel = "Sipify-channel";
 
+function hideTemp() {
+    document.getElementById("current_temperature").style.display = "none"
+}
 function hideData() {
     document.getElementById("no_coffee_data").style.display = "none";
     document.getElementById("show_coffee_data").style.display = "block";
@@ -25,7 +28,7 @@ const setupPubNub = () => {
     });
 
     subscription.onMessage = (messageEvent) => {
-        console.log("Message: " + messageEvent)
+        console.log("MessageEvent: " + messageEvent)
         handleMessage(messageEvent.message);
     };
 
@@ -42,10 +45,14 @@ const publishMessage = async (message) => {
 };
 
 
-
 function handleMessage(message) {
     console.log('Message: ' + message);
-    if (message == "Cup detected") {
+    if (parseInt(message) > 3) {
+        console.log("MESSAGE FROM PUBNUB: ", message)
+        document.getElementById("current_temperature").value = message
+        publishMessage(message)
+    }
+    else if (message == "Cup detected") {
         document.getElementById("show_coffee_data").style.display = "block";
         document.getElementById("no_coffee_data").style.display = "none";
     }
@@ -53,4 +60,5 @@ function handleMessage(message) {
         document.getElementById("no_coffee_data").style.display = "block";
         document.getElementById("show_coffee_data").style.display = "none";
     }
+
 };

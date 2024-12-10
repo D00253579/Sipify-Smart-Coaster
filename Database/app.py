@@ -55,8 +55,8 @@ def barista_mode():
 @app.route("/get_drink_and_temperature", methods=["POST"])
 def get_selected_drink():
     selected_drink = request.form.get("selected")
-    current_temperature = request.form.get("input_temperature")
-
+    current_temperature = request.form.get("pubnub_temperature")
+    print("TEMPERATURE: ", current_temperature)
     current_temperature = int(current_temperature)
 
     if selected_drink and current_temperature:
