@@ -14,7 +14,7 @@
     </head>
     {% include 'nav_bar.html' %}
 
-    <body onload="hideData();">
+    <body onload="setupPubNub(); ">
         <div id="no_coffee_data">
             <div class="text-center mt-4">
                 <h1>No coffee cup detected</h1>
@@ -36,7 +36,7 @@
                     {% for status in current_drink_status["current_status"] %}
                     <li>
                         <div class="card text-center mt-3" style="width: 20rem">
-                            <span><b>"{{ status.current_notification }} "</b></span>
+                            <span><b id="tempNotification">"{{ status.current_notification }} "</b></span>
                         </div>
                         <br>
                         <div class="d-flex justify-content-between align-items-center">

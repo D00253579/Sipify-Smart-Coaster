@@ -1,11 +1,10 @@
-import time
 import RPi.GPIO as GPIO
 from pubnub.pnconfiguration import PNConfiguration
 from pubnub.pubnub import PubNub, SubscribeListener
+import os, time
 from dotenv import load_dotenv
-import os
-import json
 
+load_dotenv()
 pin_r = 21
 pin_g = 20
 pin_b = 16
@@ -31,45 +30,44 @@ config.publish_key = os.getenv("PUBNUB_PUBLISH_KEY")
 config.user_id = "Sipify"
 pubnub = PubNub(config)
 pubnub.add_listener(Listener())
-app_channel = "Sipify-channel"
-subscription = pubnub.channel(app_channel).subscription()
-subscription.subscribe()
+app_channel1 = "Sipify-channel"
+app_channel2 = "Get-notification"
+subscription1 = pubnub.channel(app_channel1).subscription()
+subscription1.on_message = lambda message: handle_message(message)
+subscription1.subscribe()
+subscription2 = pubnub.channel(app_channel2).subscription()
+subscription2.on_message = lambda message: handle_message(message)
+subscription2.subscribe()
+
 publish_result = (
-    pubnub.publish().channel(app_channel).message("Hello from Sipify").sync()
+    pubnub.publish().channel(app_channel1).message("Hello from Sipify").sync(),
+    pubnub.publish().channel(app_channel2).message("Hello from Sipify").sync(),
 )
 
-# These values would change depending on what coffee type is currently selected
-min_temp = 0
-max_temp = 0
-# optimal_temp = (>= min_temp && <= max_temp)
 
+# The main function simulates data retrieval of temperature inputs and reacts accordingly
+def handle_message(message):
+    print(message.message)
+    coffee_notification = message.message
 
-# The main function simulates data retrival of temperature inputs and reacts accordingly
-def main():
-    try:
-        while True:
+    while True:
+        if coffee_notification == "Drink while it's hot":
+            turn_on(pin_r)  # turn on red LED        - coffee is too hot
+            # pubnub.publish().channel(app_channel2).message("Red LED Activated").sync()
+            break
+        elif coffee_notification == "Reheat drink":
+            turn_on(pin_b)  # turn on blue LED       - coffee is too cold
+            # pubnub.publish().channel(app_channel2).message("Blue LED Activated").sync()
+            break
+        elif coffee_notification == "Ready to go!":
+            turn_on(pin_g)  # turn on green LED      - coffee is at optimal temperature
+            # pubnub.publish().channel(app_channel2).message("Green LED Activated").sync()
+            break
 
-            if coffee_temp > max_temp:
-                turn_on(pin_r)  # turn on red LED        - coffee is too hot
-                pubnub.publish().channel(app_channel).message(
-                    "Red LED Activated"
-                ).sync()
-            elif coffee_temp < min_temp:
-                turn_on(pin_b)  # turn on blue LED       - coffee is too cold
-                pubnub.publish().channel(app_channel).message(
-                    "Blue LED Activated"
-                ).sync()
-
-            else:
-                turn_on(
-                    pin_g
-                )  # turn on green LED      - coffee is at optimal temperature
-                pubnub.publish().channel(app_channel).message(
-                    "Green LED Activated"
-                ).sync()
-
-    except KeyboardException:
-        GPIO.cleanup()
+        else:
+            # pubnub.publish().channel(app_channel2).message("Incorrect Message").sync()
+            break
+    GPIO.cleanup()
 
 
 def turn_on(pin):
@@ -83,8 +81,4 @@ def turn_on(pin):
 
 def turn_off(pin):
     GPIO.output(pin, GPIO.LOW)
-    pubnub.publish().channel(app_channel).message("LED deactivated").sync()
-
-
-if __name__ == "__main__":
-    main()
+    pubnub.publish().channel(app_channel2).message("LED deactivated").sync()
