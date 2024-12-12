@@ -57,7 +57,7 @@ def get_selected_drink():
     selected_drink = request.form.get("selected")
     current_temperature = request.form.get("pubnub_temperature")
     print("TEMPERATURE: ", current_temperature)
-    current_temperature = int(current_temperature)
+    current_temperature = int(current_temperature) * 2
 
     if selected_drink and current_temperature:
         mongoDB.add_drink_status(selected_drink, current_temperature)
