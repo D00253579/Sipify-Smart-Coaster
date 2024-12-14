@@ -18,7 +18,7 @@ class Listener(SubscribeListener):
         print(f"Status: \n{status.category.name}")
 
 
-config = PNConfiiguration()
+config = PNConfiguration()
 config.subscribe_key = os.getenv("PUBNUB_SUBSCRIBE_KEY")
 config.publish_key = os.getenv("PUBNUB_PUBLISH_KEY")
 config.user_id = "Sipify"

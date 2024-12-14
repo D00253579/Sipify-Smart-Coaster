@@ -60,7 +60,6 @@ def read_temp():
     temperature = temp_data.split("=")[1][:2]
     return temperature
 
-
 def main():
     try:
         while True:
@@ -73,3 +72,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
