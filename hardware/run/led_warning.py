@@ -9,9 +9,9 @@ import threading
 
 
 load_dotenv()
-pin_r = 21
+pin_r = 16
 pin_g = 20
-pin_b = 16
+pin_b = 21
 leds = [pin_r, pin_g, pin_b]  # list of pins
 keep_beeping = False
 
@@ -76,15 +76,10 @@ def turn_off(pin):
     GPIO.output(pin, GPIO.LOW)
 
 buzzer = Buzzer(14)
-buzzer.beep(3)
-
 
 # When keep_beeping becomes true, this function will continue to run inside a thread until it is set to false
 def beep_forever():
     while keep_beeping:
         buzzer.beep(3)
         time.sleep(5)
-
-if __name__ == "__main__":
-    main()
 

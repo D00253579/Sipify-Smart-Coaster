@@ -9,7 +9,7 @@ import json
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 load_dotenv()
-pin_ldr = 4
+pin_ldr = 3
 data = {}
 
 
