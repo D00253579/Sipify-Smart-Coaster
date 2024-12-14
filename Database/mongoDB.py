@@ -15,7 +15,6 @@ class Drinks(db.Document):
     maximum_temperature = db.IntField()
 
 
-# new_drink = Drink(coffee_name="Latte")
 class Notifications(db.Document):
     meta = {"collection": "notifications"}
     status = db.StringField()
@@ -31,6 +30,12 @@ class Drink_Status(db.Document):
     selected_drink = db.StringField()
     current_temperature = db.IntField()
     current_notification = db.StringField()
+    created_at = db.DateTimeField(default=datetime.datetime.now)
+
+
+class Cup_Detection(db.Document):
+    meta = {"collection": "cup_detection"}
+    message = db.StringField()
     created_at = db.DateTimeField(default=datetime.datetime.now)
 
 
@@ -115,7 +120,6 @@ def get_current_drink_status():
         "-created_at"
     ).first()  # descending order
 
-    # if current_drink_status:
     return {
         "current_status": [
             {
@@ -125,7 +129,6 @@ def get_current_drink_status():
             }
         ]
     }
-    # return {"current_status": []}
 
 
 def add_drink_status(selected_drink, current_temperature):
@@ -148,3 +151,14 @@ def add_drink_status(selected_drink, current_temperature):
         )
     else:
         print("No drink selected")
+
+
+def add_cup_detection(cup_detection_message):
+    if cup_detection_message is not False:
+        Cup_Detection(
+            message=cup_detection_message, created_at=datetime.datetime.now()
+        ).save()
+        print("Cup message received")
+        print(str(cup_detection_message))
+    else:
+        print("No message for cup detection")
