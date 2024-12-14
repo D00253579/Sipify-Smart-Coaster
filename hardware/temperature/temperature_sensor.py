@@ -1,8 +1,8 @@
 import os
 import glob
 import time
-
 import RPi.GPIO as GPIO
+
 from pubnub.pnconfiguration import PNConfiguration
 from pubnub.pubnub import PubNub, SubscribeListener
 from dotenv import load_dotenv
@@ -61,8 +61,15 @@ def read_temp():
     return temperature
 
 
-while True:
-    if read_temp() != "":
-        pubnub.publish().channel(app_channel).message(read_temp()).sync()
-        print(read_temp())
-    time.sleep(20)
+def main():
+    try:
+        while True:
+            if read_temp() != "":
+                pubnub.publish().channel(app_channel).message(read_temp()).sync()
+                print(read_temp())
+            time.sleep(5)
+    except KeyboardInterrupt:
+        GPIO.cleanup()
+
+if __name__ == "__main__":
+    main()
