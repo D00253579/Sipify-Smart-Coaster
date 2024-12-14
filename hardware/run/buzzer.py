@@ -19,3 +19,14 @@ class Buzzer:
 
     def cleanup(self):
         GPIO.cleanup(self.pin)
+
+        GPIO.setmode(self.pin, GPIO.OUTPUT)
+
+    def beep(self, duration=0.5):
+        GPIO.output(self.pin, GPIO.HIGH)
+        time.sleep(duration)
+        GPIO.output(self.pin, GPIO.LOW)
+
+    def cleanup(self):
+        GPIO.cleanup(self.pin)
+

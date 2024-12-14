@@ -36,8 +36,7 @@ config.user_id = "Sipify"
 pubnub = PubNub(config)
 pubnub.add_listener(Listener())
 subscription2 = pubnub.channel(app_channel2).subscription()
-subscription2.on_message = lambda message: handle_message(message)
-subscription2.subscribe()
+
 
 
 # The main function simulates data retrieval of temperature inputs and reacts accordingly
@@ -62,6 +61,16 @@ def handle_message(message):
         keep_beeping = True # enable continuous beeping
         threading.Thread(target=beep_forever, daemon=True).start() # start buzzer beep on a thread
 
+def main():
+    try:
+        subscription2.on_message = lambda message: handle_message(message)
+        subscription2.subscribe()
+
+        time.sleep(1)
+
+    except KeyboardInterrupt:
+        GPIO.cleanup()
+
 
 def turn_on(pin):
     global leds
@@ -71,15 +80,13 @@ def turn_on(pin):
         else:
             turn_off(led)  # turn off other led that was previously on
 
-
 def turn_off(pin):
     GPIO.output(pin, GPIO.LOW)
 
-buzzer = Buzzer(14)
 
+buzzer = Buzzer(14)
 # When keep_beeping becomes true, this function will continue to run inside a thread until it is set to false
 def beep_forever():
     while keep_beeping:
         buzzer.beep(3)
         time.sleep(5)
-
