@@ -1,7 +1,7 @@
 import os
 import glob
 import time
- 
+import RPi.GPIO as GPIO
 os.system('modprobe w1-gpio')
 os.system('modprobe w1-therm')
  
@@ -29,6 +29,13 @@ def read_temp():
     temperature = temp_data.split('=')[1][:2]	
     return temperature
 	
-while True:
-	print(read_temp())	
-	time.sleep(1)
+def main():
+    try:
+        while True:
+            print(read_temp())	
+            time.sleep(5)
+    except KeyboardInterrupt:
+        GPIO.cleanup()
+     
+if __name__ == "__main__":
+    main()

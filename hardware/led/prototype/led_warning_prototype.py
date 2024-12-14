@@ -24,27 +24,26 @@ max_temp = 80
 
 # The main function simulates data retrival of temperature inputs and reacts accordingly
 def main():
-    print("Enter -99 to safely exit loop, DO NOT exit with Ctrl + C or ^ + C")
+    try:
+        while True:
+            coffee_temp = int(input("How hot is the coffee: ")) # simulate retrival of real time temperature data
     
-    while True:
-        coffee_temp = int(input("How hot is the coffee: ")) # simulate retrival of real time temperature data
-   
-        if coffee_temp > max_temp:
-            turn_on(pin_r) # turn on red LED        - coffee is too hot
-    
-        elif coffee_temp < min_temp:
-            turn_on(pin_b) # turn on blue LED       - coffee is too cold
+            if coffee_temp > max_temp:
+                turn_on(pin_r) # turn on red LED        - coffee is too hot
+        
+            elif coffee_temp < min_temp:
+                turn_on(pin_b) # turn on blue LED       - coffee is too cold
 
-        else:
-            turn_on(pin_g) # turn on green LED      - coffee is at optimal temperature
+            else:
+                turn_on(pin_g) # turn on green LED      - coffee is at optimal temperature
 
 
 
-        # Used to safely exit while loop to clean up GPIO pins and turn of LED's
-        if coffee_temp == -99:
-            break
-    cleanup()
-    GPIO.cleanup()
+            # Used to safely exit while loop to clean up GPIO pins and turn of LED's
+            if coffee_temp == -99:
+                break
+    except KeyboardInterrupt:
+        GPIO.cleanup()
 
 
 
@@ -58,18 +57,6 @@ def turn_on(pin):
 
 def turn_off(pin):
     GPIO.output(pin, GPIO.LOW)
-
-
-def cleanup():
-    global leds
-    for led in leds:
-        turn_off(led)
-    GPIO.cleanup()
-
-
-
-
-
 
 
 

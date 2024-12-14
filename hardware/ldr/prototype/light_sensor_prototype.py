@@ -10,9 +10,13 @@ pin_ldr = 4
 
 def main():
 
-    while True:
-        cup_detected = detect_light(pin_ldr)
-        print(cup_detected)
+    try:
+        while True:
+            cup_detected = detect_light(pin_ldr)
+            print(cup_detected)
+    except KeyboardInterrupt:
+        GPIO.cleanup()
+
 
 
 def detect_light(pin):
