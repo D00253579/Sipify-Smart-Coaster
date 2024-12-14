@@ -5,9 +5,9 @@ import os, time
 from dotenv import load_dotenv
 
 load_dotenv()
-pin_r = 21
+pin_r = 16
 pin_g = 20
-pin_b = 16
+pin_b = 21
 leds = [pin_r, pin_g, pin_b]  # list of pins
 
 app_channel2 = "Get-notification"
@@ -25,8 +25,7 @@ config.user_id = "Sipify"
 pubnub = PubNub(config)
 pubnub.add_listener(Listener())
 subscription2 = pubnub.channel(app_channel2).subscription()
-subscription2.on_message = lambda message: handle_message(message)
-subscription2.subscribe()
+
 
 
 # The main function simulates data retrieval of temperature inputs and reacts accordingly
@@ -54,6 +53,16 @@ GPIO.setup(pin_r, GPIO.OUT, initial=GPIO.LOW)
 GPIO.setup(pin_g, GPIO.OUT, initial=GPIO.LOW)
 GPIO.setup(pin_b, GPIO.OUT, initial=GPIO.LOW)
 
+def main():
+    try:
+        subscription2.on_message = lambda message: handle_message(message)
+        subscription2.subscribe()
+
+        time.sleep(1)
+
+    except KeyboardInterrupt:
+        GPIO.cleanup()
+
 
 def turn_on(pin):
     global leds
@@ -63,6 +72,8 @@ def turn_on(pin):
         else:
             turn_off(led)  # turn off other led that was previously on
 
-
 def turn_off(pin):
     GPIO.output(pin, GPIO.LOW)
+
+if __name__ == "__main__":
+    main()

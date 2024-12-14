@@ -5,9 +5,9 @@ import os, time
 from dotenv import load_dotenv
 
 load_dotenv()
-pin_r = 21
+pin_r = 16
 pin_g = 20
-pin_b = 16
+pin_b = 21
 leds = [pin_r, pin_g, pin_b]  # list of pins
 
 app_channel2 = "Get-notification"

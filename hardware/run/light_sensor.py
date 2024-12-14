@@ -9,7 +9,7 @@ import json
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 load_dotenv()
-pin_ldr = 4
+pin_ldr = 3
 data = {}
 
 
@@ -33,10 +33,13 @@ publish_result = (
 
 
 def main():
-    while True:
-        time.sleep(3)
-        cup_detected = detect_light(pin_ldr)
-        print(cup_detected)
+    try:
+        while True:
+            time.sleep(3)
+            cup_detected = detect_light(pin_ldr)
+            print(cup_detected)
+    except KeyboardInterrupt:
+        GPIO.cleanup()
 
 
 def detect_light(pin):
