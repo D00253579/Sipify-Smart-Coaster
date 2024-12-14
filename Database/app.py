@@ -41,13 +41,10 @@ def show_temperatures():
 # show current drink name, temp and notification
 @app.route("/barista_mode")
 def barista_mode():
-    # drink_notification = mongoDB.get_notification()
     current_drink_status = mongoDB.get_current_drink_status()
     print("current status", current_drink_status)
     return render_template(
         "barista_mode.html",
-        # drink_notification=drink_notification,
-        # all_drink_status=all_drink_status,
         current_drink_status=current_drink_status,
     )
 
@@ -88,6 +85,23 @@ def drink_history():
         "history.html",
         all_drink_status=all_drink_status,
     )
+
+
+# using the form action in the barista mode screen to get the show_coffee_data or no_coffee_data message
+@app.route("/get_cup_detection", methods=["POST"])
+def get_cup_detection():
+    cup_detection_message = request.form.get("cup_detection")
+
+    if cup_detection_message == "show_coffee_data":
+        mongoDB.add_cup_detection("Cup detected")
+        print("Message: cup detected")
+        return redirect("/barista_mode")
+    elif cup_detection_message == "no_coffee_data":
+        mongoDB.add_cup_detection("No Cup detected")
+        print("Message: no cup detected ")
+        return redirect("/barista_mode")
+    else:
+        print("No message has been recieved")
 
 
 if __name__ == "__main__":

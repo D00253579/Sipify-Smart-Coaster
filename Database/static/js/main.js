@@ -68,6 +68,8 @@ const publishMessage2 = async (message) => {
 
 
 function handleMessage(message) {
+    let cupDetectionInput = document.getElementById("cup_detection")
+
     console.log('Message: ' + message);
     if (parseInt(message) > 3) {
         console.log("MESSAGE FROM PUBNUB: ", message)
@@ -78,13 +80,16 @@ function handleMessage(message) {
     else if (message == "Cup detected") {
         document.getElementById("show_coffee_data").style.display = "block";
         document.getElementById("no_coffee_data").style.display = "none";
+        cupDetectionInput.value = "show_coffee_data"
     }
     else if (message == "No cup detected") {
         document.getElementById("no_coffee_data").style.display = "block";
         document.getElementById("show_coffee_data").style.display = "none";
+        cupDetectionInput.value = "no_coffee_data"
     }
 
 };
 function sendNotification(notification) {
     publishMessage2(notification)
 };
+
