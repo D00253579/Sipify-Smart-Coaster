@@ -21,15 +21,6 @@ body{
     z-index: 0;
 }
 
-#button{
- position: relative;
-    z-index: 1;
-    border-color: #B8613A;   
-}
-
-#button:hover{
-   background-color: #914e30;   
-}
 
 #loading_button{
     position: relative;
