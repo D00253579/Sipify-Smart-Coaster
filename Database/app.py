@@ -3,6 +3,7 @@ from flask_mongoengine import MongoEngine
 import mongoDB
 from dotenv import load_dotenv
 import os
+from events import socketio
 
 load_dotenv()
 
@@ -13,6 +14,7 @@ app.config["MONGODB_SETTINGS"] = {"host": database_URI}
 
 db = MongoEngine()
 db.init_app(app)
+socketio.init_app(app)
 
 
 @app.route("/")
@@ -91,7 +93,7 @@ def drink_history():
 @app.route("/get_cup_detection", methods=["POST"])
 def get_cup_detection():
     cup_detection_message = request.form.get("cup_detection")
-
+    print(cup_detection_message)
     if cup_detection_message == "show_coffee_data":
         mongoDB.add_cup_detection("Cup detected")
         print("Message: cup detected")
@@ -101,8 +103,8 @@ def get_cup_detection():
         print("Message: no cup detected ")
         return redirect("/barista_mode")
     else:
-        print("No message has been recieved")
+        print("No message has been received")
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    socketio.run(app, debug=True)

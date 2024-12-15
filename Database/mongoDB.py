@@ -82,9 +82,9 @@ def get_notification(selected_drink, current_temperature):
         if (
             drink.drink_name == selected_drink
         ):  # find the matching drink name from the table
-            if current_temperature < drink.minimum_temperature:  # drink is cold
+            if int(current_temperature) < drink.minimum_temperature:  # drink is cold
                 notification = Notifications.objects.get(status="cold")
-            elif current_temperature > drink.maximum_temperature:  # drink is hot
+            elif int(current_temperature) > drink.maximum_temperature:  # drink is hot
                 notification = Notifications.objects.get(status="hot")
             else:
                 notification = Notifications.objects.get(
@@ -138,7 +138,7 @@ def add_drink_status(selected_drink, current_temperature):
 
         Drink_Status(
             selected_drink=selected_drink,
-            current_temperature=current_temperature,
+            current_temperature=int(current_temperature),
             current_notification=current_notification,
         ).save()
 

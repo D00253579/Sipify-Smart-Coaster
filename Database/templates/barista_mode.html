@@ -11,66 +11,132 @@
         <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.8.2.8.js"></script>
         <link rel="icon" href="/static/favicon.png" type="image/png">
         <script src="static/js/main.js"></script>
+        <script src="https://cdn.socket.io/3.1.3/socket.io.min.js"></script>
     </head>
     {% include 'nav_bar.html' %}
     <form action="/get_cup_detection" method="POST">
         <input type="hidden" id="cup_detection" name="cup_detection" value="">
-        <button type="submit" id="loading-button" class="btn btn-primary btn-lg rounded-top mt-4 ml-4">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cup" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M.11 3.187A.5.5 0 0 1 .5 3h13a.5.5 0 0 1 .488.608l-.22.991a3.001 3.001 0 0 1-1.3 5.854l-.132.59A2.5 2.5 0 0 1 9.896 13H4.104a2.5 2.5 0 0 1-2.44-1.958L.012 3.608a.5.5 0 0 1 .098-.42Zm12.574 6.288a2 2 0 0 0 .866-3.899zM1.124 4l1.516 6.825A1.5 1.5 0 0 0 4.104 12h5.792a1.5 1.5 0 0 0 1.464-1.175L12.877 4H1.123Z"/>
-              </svg>
+        <button type="submit" id="loading_button" class="btn btn-primary btn-lg rounded-top mt-4 ml-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cup"
+                viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M.11 3.187A.5.5 0 0 1 .5 3h13a.5.5 0 0 1 .488.608l-.22.991a3.001 3.001 0 0 1-1.3 5.854l-.132.59A2.5 2.5 0 0 1 9.896 13H4.104a2.5 2.5 0 0 1-2.44-1.958L.012 3.608a.5.5 0 0 1 .098-.42Zm12.574 6.288a2 2 0 0 0 .866-3.899zM1.124 4l1.516 6.825A1.5 1.5 0 0 0 4.104 12h5.792a1.5 1.5 0 0 0 1.464-1.175L12.877 4H1.123Z" />
+            </svg>
         </button>
-    <body onload="setupPubNub(); ">
-        <div id="no_coffee_data">
-            <div class="text-center mt-4">
-                <h1>No coffee cup detected</h1>
+
+        <body onload="setupPubNub(); ">
+            <div id="no_coffee_data">
                 <div class="text-center mt-4">
-                    <h3>Please place your cup onto the coaster......</h3>
+                    <h1>No coffee cup detected</h1>
+                    <div class="text-center mt-4">
+                        <h3>Please place your cup onto the coaster......</h3>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div id="show_coffee_data">
-            <div class="text-center">
-                <h1>Barista Mode</h1>
-
+            <div id="show_coffee_data">
                 <div class="text-center">
-                    <img src="/static/cup.png" alt="coffee image" height="250">
-                </div>
+                    <h1>Barista Mode</h1>
+                    <input type="number" id="current_temp">
+                    <div class="text-center">
+                        <img src="/static/cup.png" alt="coffee image" height="250">
+                    </div>
 
-                <ul class="list-inline barista d-flex justify-content-center align-itemms-center flex-wwrap">
-                    {% if current_drink_status["current_status"] %}
-                    {% for status in current_drink_status["current_status"] %}
-                    <li>
-                        <div class="card text-center mt-3" style="width: 20rem">
-                            <span><b id="tempNotification">"{{ status.current_notification }} "</b></span>
-                        </div>
-                        <br>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="temperature-box">
-                                <span>{{ status.current_temperature }} °C </span>
-                                <br>
+                    <ul class="list-inline barista d-flex justify-content-center align-itemms-center flex-wwrap">
+                        {% if current_drink_status["current_status"] %}
+                        {% for status in current_drink_status["current_status"] %}
+                        <li>
+                            <div class="card text-center mt-3" style="width: 20rem">
+                                <span><b id="tempNotification">"{{ status.current_notification }} "</b></span>
                             </div>
-                            <span>{{ status.selected_drink }}</span>
-                        </div>
-                    </li>
-                    {% endfor %}
-                    {% else %}
-                    <li>No drink status</li>
-                    {% endif %}
-                </ul>
-                <a href="/">
-                    <button type="submit" id="loading_button" class="btn btn-primary btn-lg rounded-top mt-4">Finish
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-check" viewBox="0 0 16 16">
-                            <path
-                                d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z" />
-                        </svg>
-                    </button>
-                </a>
+                            <br>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="temperature-box">
+                                    <span ip="mostRecentTemp">{{ status.current_temperature }} °C </span>
+                                    <br>
+                                </div>
+                                <span id="user_drink">{{ status.selected_drink }}</span>
+                            </div>
+                        </li>
+                        {% endfor %}
+                        {% else %}
+                        <li>No drink status</li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <img src="/static/oneSide.png" alt="coffee background image" class="barista-image" height="300">
             </div>
-            <img src="/static/oneSide.png" alt="coffee background image" class="barista-image" height="300">
-        </div>
     </form>
+    <div class="text-center">
+        <button id="button" class="btn btn-primary btn-lg rounded-top mt-4">Socket</button>
+        <a href="/">
+            <button type="submit" id="loading_button" class="btn btn-primary btn-lg rounded-top mt-4">Finish
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z" />
+                </svg>
+            </button>
+        </a>
+    </div>
+
+    <script>
+        document.getElementById("current_temp").style.display = "none"
+        let appChannel = "Get-notification"
+        let cupDetectionInput = document.getElementById("cup_detection")
+        pubnub = new PubNub({
+            publishKey: 'pub-c-8777a30b-5dcb-4cb3-8f28-14b9224c5671',
+            subscribeKey: 'sub-c-c0a95f25-6142-4c5a-b5aa-735d9661bcae',
+            userId: "Sipify",
+        });
+        const channel = pubnub.channel(appChannel);
+        const subscription = channel.subscription();
+        pubnub.addListener({
+            status: (s) => {
+                console.log('Status (SOCKET.IO)', s.category);
+                console.log("Connected to pubnub (SOCKET.IO)")
+            },
+        });
+        subscription.onMessage = (messageEvent) => {
+            console.log("MessageEvent: " + messageEvent)
+            handleMessage(messageEvent.message);
+        };
+
+        subscription.subscribe();
+
+        function handleMessage(message) {
+            console.log('Message: ' + message);
+            if (parseInt(message) > 3) {
+                console.log("MESSAGE FROM SOCKET: ", message)
+                document.getElementById("current_temp").value = message
+            } else if (message == "Cup detected") {
+                document.getElementById("show_coffee_data").style.display = "block";
+                document.getElementById("no_coffee_data").style.display = "none";
+                cupDetectionInput.value = "show_coffee_data"
+            }
+            else if (message == "No cup detected") {
+                document.getElementById("no_coffee_data").style.display = "block";
+                document.getElementById("show_coffee_data").style.display = "none";
+                cupDetectionInput.value = "no_coffee_data"
+            }
+        }
+
+        const socket = io("https://sipify.site/")
+        socket.connect()
+        socket.on("connect", function () {
+            setInterval(() => {
+                let selectedDrink = document.getElementById("user_drink").innerHTML
+                console.log("Selected Drink (Socket Activation): ", selectedDrink)
+                let newTemp = document.getElementById("current_temp").value * 2
+                console.log("New Temperrature (Socket Activation): ", newTemp)
+                console.log("SOCKET REACHED")
+                socket.emit("updateTemp", selectedDrink, newTemp)
+
+            }, 5000)
+            setInterval(() => {
+                location.reload()
+            }, 15000)
+        })
+    </script>
     </body>
 
 </html>
