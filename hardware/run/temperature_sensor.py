@@ -22,7 +22,8 @@ class Listener(SubscribeListener):
 config = PNConfiguration()
 config.subscribe_key = os.getenv("PUBNUB_SUBSCRIBE_KEY")
 config.publish_key = os.getenv("PUBNUB_PUBLISH_KEY")
-config.user_id = "Sipify"
+config.secret_key = os.getenv("PUBNUB_SECRET_KEY")
+config.uuid = os.getenv("PUBNUB_USER_ID")
 pubnub = PubNub(config)
 pubnub.add_listener(Listener())
 app_channel = "Sipify-channel"
@@ -60,6 +61,7 @@ def read_temp():
     temperature = temp_data.split("=")[1][:2]
     return temperature
 
+
 def main():
     try:
         while True:
@@ -70,6 +72,6 @@ def main():
     except KeyboardInterrupt:
         GPIO.cleanup()
 
+
 if __name__ == "__main__":
     main()
-

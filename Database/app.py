@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, request
 from flask_mongoengine import MongoEngine
 import mongoDB
+import pb
 from dotenv import load_dotenv
 import os
 from events import socketio
@@ -25,9 +26,11 @@ def index():
 # show list of drinks, allow user to select a drink and click the next button to continue
 @app.route("/drinks_selection")
 def show_drinks_selection():
+    token = pb.grant_token("Sipify_User")
+    print("SIPIFY TOKEN: ", token)
     all_drinks = mongoDB.view_all_drinks()
     print(all_drinks)
-    return render_template("drinks_selection.html", all_drinks=all_drinks)
+    return render_template("drinks_selection.html", all_drinks=all_drinks, token=token)
 
 
 # show list of drinks , and temperature range for each drink (min and max temperatures)
@@ -43,11 +46,12 @@ def show_temperatures():
 # show current drink name, temp and notification
 @app.route("/barista_mode")
 def barista_mode():
+    token = pb.grant_token("Sipify_User")
+    print("SIPIFY TOKEN2: ", token)
     current_drink_status = mongoDB.get_current_drink_status()
     print("current status", current_drink_status)
     return render_template(
-        "barista_mode.html",
-        current_drink_status=current_drink_status,
+        "barista_mode.html", current_drink_status=current_drink_status, token=token
     )
 
 

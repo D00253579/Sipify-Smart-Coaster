@@ -7,7 +7,6 @@ from buzzer import Buzzer
 import threading
 
 
-
 load_dotenv()
 pin_r = 16
 pin_g = 20
@@ -24,6 +23,8 @@ GPIO.setup(pin_b, GPIO.OUT, initial=GPIO.LOW)
 
 
 app_channel2 = "Get-notification"
+
+
 class Listener(SubscribeListener):
     def status(self, pubnub, status):
         print(f"Status: \n{status.category.name}")
@@ -32,11 +33,11 @@ class Listener(SubscribeListener):
 config = PNConfiguration()
 config.subscribe_key = os.getenv("PUBNUB_SUBSCRIBE_KEY")
 config.publish_key = os.getenv("PUBNUB_PUBLISH_KEY")
-config.user_id = "Sipify"
+config.secret_key = os.getenv("PUBNUB_SECRET_KEY")
+config.uuid = os.getenv("PUBNUB_USER_ID")
 pubnub = PubNub(config)
 pubnub.add_listener(Listener())
 subscription2 = pubnub.channel(app_channel2).subscription()
-
 
 
 # The main function simulates data retrieval of temperature inputs and reacts accordingly
@@ -58,8 +59,11 @@ def handle_message(message):
         turn_on(pin_g)  # turn on green LED      - coffee is at optimal temperature
         pubnub.publish().channel(app_channel2).message("Green LED Activated").sync()
 
-        keep_beeping = True # enable continuous beeping
-        threading.Thread(target=beep_forever, daemon=True).start() # start buzzer beep on a thread
+        keep_beeping = True  # enable continuous beeping
+        threading.Thread(
+            target=beep_forever, daemon=True
+        ).start()  # start buzzer beep on a thread
+
 
 def main():
     try:
@@ -80,13 +84,20 @@ def turn_on(pin):
         else:
             turn_off(led)  # turn off other led that was previously on
 
+
 def turn_off(pin):
     GPIO.output(pin, GPIO.LOW)
 
 
 buzzer = Buzzer(14)
+
+
 # When keep_beeping becomes true, this function will continue to run inside a thread until it is set to false
 def beep_forever():
     while keep_beeping:
         buzzer.beep(3)
         time.sleep(5)
+
+
+if __name__ == "__main__":
+    main()
