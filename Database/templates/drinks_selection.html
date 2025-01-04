@@ -13,8 +13,11 @@
         <script src="static/js/main.js"></script>
     </head>
 
-    <body onload="hideTemp(); setupPubNub();">
+    <body onload="hideTemp(); setupPubNub(); ">
         {% include 'nav_bar.html' %}
+        <script>
+            let token = "{{ token }}";
+        </script>
         <form action="/get_drink_and_temperature" method="POST">
             <div class="text-center">
                 <h1 class="mt-4">Select Your Drink</h1>
