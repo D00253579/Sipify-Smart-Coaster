@@ -123,14 +123,15 @@
             }
         }
 
-        const socket = io("http://127.0.0.1:5000")
-        socket.connect()
-        socket.on("connect", function () {
+
+        const socket1 = io("https://sipify.site/")
+        socket1.connect()
+        socket1.on("connect", function () {
             setInterval(() => {
                 let selectedDrink = document.getElementById("user_drink").innerHTML
-                console.log("Selected Drink (Socket Activation): ", selectedDrink)
+                console.log("Selected Drink (Socket1 Activation): ", selectedDrink)
                 let newTemp = document.getElementById("current_temp").value * 2
-                console.log("New Temperrature (Socket Activation): ", newTemp)
+                console.log("New Temperrature (Socket1 Activation): ", newTemp)
                 console.log("SOCKET REACHED")
                 socket.emit("updateTemp", selectedDrink, newTemp)
 
@@ -139,6 +140,23 @@
                 location.reload()
             }, 15000)
         })
+        const socket2 = io("https://sipify.site/")
+        socket2.connect()
+        socket2.on("connect", function () {
+            setInterval(() => {
+                let selectedDrink = document.getElementById("user_drink").innerHTML
+                console.log("Selected Drink (Socket2 Activation): ", selectedDrink)
+                let newTemp = document.getElementById("current_temp").value * 2
+                console.log("New Temperrature (Socket2 Activation): ", newTemp)
+                console.log("SOCKET REACHED")
+                socket2.emit("updateTemp", selectedDrink, newTemp)
+
+            }, 5000)
+            setInterval(() => {
+                location.reload()
+            }, 15000)
+        })
+
     </script>
     </body>
 
