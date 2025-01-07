@@ -42,6 +42,7 @@ subscription2 = pubnub.channel(app_channel2).subscription()
 
 # The main function simulates data retrieval of temperature inputs and reacts accordingly
 def handle_message(message):
+    global keep_beeping
     print("LED MESSAGE:" + message.message)
     coffee_notification = str(message.message)
 
@@ -94,6 +95,7 @@ buzzer = Buzzer(14)
 
 # When keep_beeping becomes true, this function will continue to run inside a thread until it is set to false
 def beep_forever():
+    global keep_beeping
     while keep_beeping:
         buzzer.beep(3)
         time.sleep(5)
